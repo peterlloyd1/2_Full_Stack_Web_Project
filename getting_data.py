@@ -11,12 +11,11 @@ PATH = "C:\Program Files (x86)\chromedriver.exe"
 
 driver = webdriver.Chrome(PATH)
 
-# Create a function called Login on UI8
-# Create function called login on CGTrader
 
+def get_info_UI8():
 
-def loginUI8():
-
+    # * Logging in on UI8
+    # region
     driver.get("https://ui8.net/")
 
     driver.implicitly_wait(15)
@@ -31,10 +30,9 @@ def loginUI8():
     password_input.send_keys(data["pw"])
 
     driver.find_element_by_id("login-button").click()
+    # endregion
 
+    # TODO: Storing the sales data in a JSON
+    # region
 
-loginUI8()
-
-# driver.find_element_by_xpath("//*[@id="login-email"]").send_keys("peteris")
-
-# driver.quit()
+    # endregion
