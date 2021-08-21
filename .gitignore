@@ -2,3 +2,6 @@ Todo.txt
 node_modules
 login_details
 login_details.json
+chromedriver.exe
+cookies.pkl
+
