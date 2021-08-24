@@ -4,4 +4,6 @@ login_details
 login_details.json
 chromedriver.exe
 selenium/*
+chrome-data
 
+selenium/Local State

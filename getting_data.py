@@ -14,10 +14,23 @@ from selenium import webdriver
 options = webdriver.ChromeOptions()
 # Path to your chrome profile
 options.add_argument(
-    "user-data-dir=D:\\Five-Coding-Projects\\2_Full_Stack_Web_Project\\selenium")
+    "user-data-dir=C:\\Users\\User\\AppData\\Local\\Google\\Chrome\\User Data")
 # Kinda works, need to understand which chrome profile to use.
+# "user-data-dir=D:\\Five-Coding-Projects\\2_Full_Stack_Web_Project\\chrome-data")
 
-w = webdriver.Chrome(
+# options.add_argument('--profile-directory=Default')
+
+driver = webdriver.Chrome(
     executable_path="chromedriver.exe", options=options)
 
-w.get("https://ui8.net/category/3d-assets")
+driver.get("https://blendermarket.com/creator/sales")
+
+driver.execute_script("window.open('');")
+driver.switch_to.window(driver.window_handles[1])
+
+driver.get("https://ui8.net")
+
+driver.execute_script("window.open('');")
+driver.switch_to.window(driver.window_handles[2])
+
+driver.get("https://www.cgtrader.com/")
