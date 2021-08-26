@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 
 
 import json
+import pickle
 
 # importing passwords for UI8
 with open('login_details.json') as login_details:
@@ -79,8 +80,38 @@ driver.get(
 # TODO: Loop trough blendermarket data tables and store the information
 # TODO: Date, Product name, Amount before fees, Earnings after fees
 
-# Printing all the items purchased
-print(driver.find_element_by_xpath('//table/tbody').text)
+sales_data = {
+    "BlenderMarket": [
+        {
+            "date": str,
+            "product_name": str,
+            "customer": str,
+            "amount": str,
+            "earnings": str,
+        }
 
-# returning the date of last product purchased
-print(driver.find_element_by_xpath('//table/tbody/tr[1]/td[1]').text)
+    ]
+
+}
+
+# Saving all the items purchased
+all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
+
+# Looping trough the sales list
+for sale in all_sales:
+    # Need to store each in a json now, under Blendermarket sales and then each individual
+
+    # date = sale.find_element_by_xpath('td[1]').text
+    # product_name = sale.find_element_by_xpath('td[3]').text
+    # customer = sale.find_element_by_xpath('td[4]').text
+    # amount = sale.find_element_by_xpath('td[5]').text
+    # earnings = sale.find_element_by_xpath('td[9]').text
+
+    sales_data["BlenderMarket"][1].append(date)
+    date = sale.find_element_by_xpath('td[1]').text
+    product_name = sale.find_element_by_xpath('td[3]').text
+    customer = sale.find_element_by_xpath('td[4]').text
+    amount = sale.find_element_by_xpath('td[5]').text
+    earnings = sale.find_element_by_xpath('td[9]').text
+
+sales_data.dump()
