@@ -81,37 +81,54 @@ driver.get(
 # TODO: Date, Product name, Amount before fees, Earnings after fees
 
 sales_data = {
-    "BlenderMarket": [
+    "BlenderMarketSales": [
         {
+
+            "sales_number": int,
+            "order_number": int,
             "date": str,
             "product_name": str,
-            "customer": str,
+            "customer_email": str,
             "amount": str,
             "earnings": str,
-        }
 
+        },
     ]
 
 }
 
+# Let us fuck this shit up and
+
+jsonObj = []
+
+
 # Saving all the items purchased
 all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
 
+
 # Looping trough the sales list
-for sale in all_sales:
-    # Need to store each in a json now, under Blendermarket sales and then each individual
+for idx, sale in enumerate(all_sales, start=1):
 
-    # date = sale.find_element_by_xpath('td[1]').text
-    # product_name = sale.find_element_by_xpath('td[3]').text
-    # customer = sale.find_element_by_xpath('td[4]').text
-    # amount = sale.find_element_by_xpath('td[5]').text
-    # earnings = sale.find_element_by_xpath('td[9]').text
-
-    sales_data["BlenderMarket"][1].append(date)
+    # Need to store this data
     date = sale.find_element_by_xpath('td[1]').text
+    purchase_id = sale.find_element_by_xpath('td[2]').text
     product_name = sale.find_element_by_xpath('td[3]').text
     customer = sale.find_element_by_xpath('td[4]').text
     amount = sale.find_element_by_xpath('td[5]').text
     earnings = sale.find_element_by_xpath('td[9]').text
 
-sales_data.dump()
+    jsonObj.append({
+        "sale": idx,
+        "pruchase_id": purchase_id,
+        "date": date,
+        "product_name": product_name,
+        "customer_email": customer,
+        "asking_price": amount,
+        "revenue": earnings,
+    },
+
+    )
+
+
+with open('blendermarket_sales.json', 'w') as f:
+    json.dump(jsonObj, f, indent=4)
