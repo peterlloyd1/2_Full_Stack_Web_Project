@@ -4,6 +4,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from datetime import date
 
 
 import json
@@ -12,6 +13,10 @@ import pickle
 # importing passwords for UI8
 with open('login_details.json') as login_details:
     data = json.load(login_details)
+
+# getting todas date
+todays_date = date.today().strftime("%Y-%m-%d")
+
 
 # path to your chrome profile ( Make sure you have logged into websites your accessing )
 options = webdriver.ChromeOptions()
@@ -45,12 +50,10 @@ def get_info_UI8():
 
         print("Logged in on UI8")
 
+        driver.get("https://ui8.net/affiliate/sales")
+
     except:
         print("Login failed")
-
-
-driver.get(
-    "https://blendermarket.com/creator/sales?start_date=2021-01-01&end_date=2021-08-25")
 
 
 # region Opening other sites
@@ -80,55 +83,46 @@ driver.get(
 # TODO: Loop trough blendermarket data tables and store the information
 # TODO: Date, Product name, Amount before fees, Earnings after fees
 
-sales_data = {
-    "BlenderMarketSales": [
-        {
 
-            "sales_number": int,
-            "order_number": int,
-            "date": str,
-            "product_name": str,
-            "customer_email": str,
-            "amount": str,
-            "earnings": str,
+def get_data_blendermarket():
 
+    driver.get(
+        "https://blendermarket.com/creator/sales?start_date=2021-05-02&end_date=" + todays_date + "&sort_date=asc")
+
+    jsonObj = []
+
+    # Saving all the items purchased
+    all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
+
+    print(len(all_sales))
+
+    # Looping trough the sales list
+    for idx, sale in enumerate(all_sales, start=1):
+
+        # Need to store this data
+        date = sale.find_element_by_xpath('td[1]').text
+        purchase_id = sale.find_element_by_xpath('td[2]').text
+        product_name = sale.find_element_by_xpath('td[3]').text
+        customer = sale.find_element_by_xpath('td[4]').text
+        amount = sale.find_element_by_xpath('td[5]').text
+        earnings = sale.find_element_by_xpath('td[9]').text
+
+        # Saving sales data
+        # Need to inverse the index of sale (Not needed in blendermarket but on cgtrader true)
+        jsonObj.append({
+            "sale": idx,
+            "pruchase_id": purchase_id,
+            "date": date,
+            "product_name": product_name,
+            "customer_email": customer,
+            "asking_price": amount,
+            "revenue": earnings,
         },
-    ]
 
-}
+        )
 
-# Let us fuck this shit up and
+    print(jsonObj)
 
-jsonObj = []
-
-
-# Saving all the items purchased
-all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
-
-
-# Looping trough the sales list
-for idx, sale in enumerate(all_sales, start=1):
-
-    # Need to store this data
-    date = sale.find_element_by_xpath('td[1]').text
-    purchase_id = sale.find_element_by_xpath('td[2]').text
-    product_name = sale.find_element_by_xpath('td[3]').text
-    customer = sale.find_element_by_xpath('td[4]').text
-    amount = sale.find_element_by_xpath('td[5]').text
-    earnings = sale.find_element_by_xpath('td[9]').text
-
-    jsonObj.append({
-        "sale": idx,
-        "pruchase_id": purchase_id,
-        "date": date,
-        "product_name": product_name,
-        "customer_email": customer,
-        "asking_price": amount,
-        "revenue": earnings,
-    },
-
-    )
-
-
-with open('blendermarket_sales.json', 'w') as f:
-    json.dump(jsonObj, f, indent=4)
+    # exporting sales data to json
+    with open('blendermarket_sales.json', 'w') as f:
+        json.dump(jsonObj, f, indent=4)
