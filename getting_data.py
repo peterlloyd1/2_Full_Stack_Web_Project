@@ -29,8 +29,10 @@ driver = webdriver.Chrome(
 
 
 # * Logging in on UI8
-def get_info_UI8():
+def get_data_UI8():
+    import time
 
+    # logging in on UI
     try:
         driver.get("https://ui8.net/")
         print("Trying to log in on UI8")
@@ -48,12 +50,34 @@ def get_info_UI8():
 
         driver.find_element_by_id("login-button").click()
 
-        print("Logged in on UI8")
+        # WebDriverWait(driver, 3).until(EC.presence_of_element_located(
+        #     (By.XPATH, '/html/body/div[1]/header/div[2]/div[2]/a')))
 
-        driver.get("https://ui8.net/affiliate/sales")
+        time.sleep(6)
+
+        print("Logged in on UI8")
 
     except:
         print("Login failed")
+
+    # getting the data from UI8
+    try:
+        print("Scrapping data from UI8")
+        driver.get("https://ui8.net/affiliate/sales")
+        time.sleep(2)
+        all_sales_ui8 = driver.find_elements_by_xpath(
+            '//html/body/div[3]/div[2]/div[1]/table/tbody/tr[1]/td[2]')
+
+        print(driver.find_element_by_class_name("table table-striped"))
+
+        print(all_sales_ui8)
+        print(driver.find_element_by_xpath(
+            "/html/body/div[3]/div[2]/div[1]/table/thead/tr/th[1]"))
+
+        print("Finished scrapping  data from UI8")
+
+    except:
+        print("Could not Scrape data from UI8")
 
 
 # region Opening other sites
@@ -126,3 +150,25 @@ def get_data_blendermarket():
     # exporting sales data to json
     with open('blendermarket_sales.json', 'w') as f:
         json.dump(jsonObj, f, indent=4)
+
+
+def get_data_cgtrader():
+    driver.get("https://www.cgtrader.com/profile/sales#latest-sales")
+
+    # Saving all the items purchased
+    all_sales_cgtrader = driver.find_elements_by_xpath('//table/tbody/tr')
+
+    # Looping trough the sales list
+    for idx, sale in enumerate(all_sales_cgtrader, start=1):
+
+        # Need to store this data
+        date = sale.find_element_by_xpath('td[2]').text
+        print(date)
+        # purchase_id = sale.find_element_by_xpath('td[2]').text
+        # product_name = sale.find_element_by_xpath('td[3]').text
+        # customer = sale.find_element_by_xpath('td[4]').text
+        # amount = sale.find_element_by_xpath('td[5]').text
+        # earnings = sale.find_element_by_xpath('td[9]').text
+
+
+get_data_cgtrader()
