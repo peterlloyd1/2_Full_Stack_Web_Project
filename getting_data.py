@@ -4,8 +4,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import datetime
 from datetime import date
-
 
 import json
 import pickle
@@ -124,6 +124,7 @@ def get_data_blendermarket():
     for idx, sale in enumerate(all_sales, start=1):
 
         # Need to store this data
+        # TODO: Change the date output to (DAY/MONTH/YEAR)
         date = sale.find_element_by_xpath('td[1]').text
         purchase_id = sale.find_element_by_xpath('td[2]').text
         product_name = sale.find_element_by_xpath('td[3]').text
@@ -131,12 +132,15 @@ def get_data_blendermarket():
         amount = sale.find_element_by_xpath('td[5]').text
         earnings = sale.find_element_by_xpath('td[9]').text
 
+        # changing date to be DAY/MONTH/YEAR
+        new_date = datetime.datetime.strptime(
+            str(date[:8]), '%m-%d-%y').strftime('%d/%m/%y')
+
         # Saving sales data
-        # Need to inverse the index of sale (Not needed in blendermarket but on cgtrader true)
         jsonObj.append({
             "sale": idx,
             "pruchase_id": purchase_id,
-            "date": date,
+            "date": new_date,
             "product_name": product_name,
             "customer_email": customer,
             "asking_price": amount,
@@ -153,6 +157,10 @@ def get_data_blendermarket():
 
 
 def get_data_cgtrader():
+    import datetime
+
+    jsonObj = []
+
     driver.get("https://www.cgtrader.com/profile/sales#latest-sales")
 
     # Saving all the items purchased
@@ -162,13 +170,38 @@ def get_data_cgtrader():
     for idx, sale in enumerate(all_sales_cgtrader, start=1):
 
         # Need to store this data
+        # TODO: Change the date output to (DAY/MONTH/YEAR)
+
+        # Changing the date output to (DAY/MONTH/YEAR)
         date = sale.find_element_by_xpath('td[2]').text
-        print(date)
-        # purchase_id = sale.find_element_by_xpath('td[2]').text
-        # product_name = sale.find_element_by_xpath('td[3]').text
-        # customer = sale.find_element_by_xpath('td[4]').text
-        # amount = sale.find_element_by_xpath('td[5]').text
-        # earnings = sale.find_element_by_xpath('td[9]').text
+        new_date = datetime.datetime.strptime(
+            str(date), '%Y-%m-%d').strftime('%d/%m/%y')
+
+        purchase_id = sale.find_element_by_xpath('td[1]').text
+        product_name = sale.find_element_by_xpath('td[3]').text
+        customer = sale.find_element_by_xpath('td[4]').text
+        original_price = sale.find_element_by_xpath('td[6]').text
+        sold_for = sale.find_element_by_xpath('td[7]').text
+        earnings = sale.find_element_by_xpath('td[11]').text
+
+        # Saving sales data
+        jsonObj.append({
+            "sale": idx,
+            "pruchase_id": purchase_id,
+            "date": new_date,
+            "product_name": product_name,
+            "customer_email": customer,
+            "asking_price": sold_for,
+            "revenue": earnings,
+        })
+
+        print("Old Date: " + date + "\n New date: " + new_date)
+
+    print(jsonObj)
+
+    # exporting sales data to json
+    with open('cgtrader_sales.json', 'w') as f:
+        json.dump(jsonObj, f, indent=4)
 
 
 get_data_cgtrader()
