@@ -159,24 +159,20 @@ def get_data_blendermarket():
 def get_data_cgtrader():
     import datetime
 
-    jsonObj = []
+    jsonOBJ = []
 
     driver.get("https://www.cgtrader.com/profile/sales#latest-sales")
 
     # Saving all the items purchased
     all_sales_cgtrader = driver.find_elements_by_xpath('//table/tbody/tr')
 
+    # TODO: The sales list has emtys, need to filter them somehow.
+
     # Looping trough the sales list
     for idx, sale in enumerate(all_sales_cgtrader, start=1):
 
         # Need to store this data
-        # TODO: Change the date output to (DAY/MONTH/YEAR)
-
-        # Changing the date output to (DAY/MONTH/YEAR)
         date = sale.find_element_by_xpath('td[2]').text
-        new_date = datetime.datetime.strptime(
-            str(date), '%Y-%m-%d').strftime('%d/%m/%y')
-
         purchase_id = sale.find_element_by_xpath('td[1]').text
         product_name = sale.find_element_by_xpath('td[3]').text
         customer = sale.find_element_by_xpath('td[4]').text
@@ -184,8 +180,15 @@ def get_data_cgtrader():
         sold_for = sale.find_element_by_xpath('td[7]').text
         earnings = sale.find_element_by_xpath('td[11]').text
 
+        if date == None:
+            pass
+
+        # Changing the date output to (DAY/MONTH/YEAR)
+        new_date = datetime.datetime.strptime(
+            str(date[:10]), '%Y-%m-%d').strftime('%d/%m/%y')
+
         # Saving sales data
-        jsonObj.append({
+        jsonOBJ.append({
             "sale": idx,
             "pruchase_id": purchase_id,
             "date": new_date,
@@ -193,15 +196,14 @@ def get_data_cgtrader():
             "customer_email": customer,
             "asking_price": sold_for,
             "revenue": earnings,
-        })
+        },
+        )
 
-        print("Old Date: " + date + "\n New date: " + new_date)
-
-    print(jsonObj)
+    print(jsonOBJ)
 
     # exporting sales data to json
     with open('cgtrader_sales.json', 'w') as f:
-        json.dump(jsonObj, f, indent=4)
+        json.dump(jsonOBJ, f, indent=4)
 
 
 get_data_cgtrader()
