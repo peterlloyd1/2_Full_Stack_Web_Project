@@ -158,18 +158,25 @@ def get_data_blendermarket():
 
 def get_data_cgtrader():
     import datetime
+    import time
 
     jsonOBJ = []
 
-    driver.get("https://www.cgtrader.com/profile/sales#latest-sales")
+    driver.get("https://www.cgtrader.com/profile/sales")
 
     # Saving all the items purchased
     all_sales_cgtrader = driver.find_elements_by_xpath('//table/tbody/tr')
-
-    # TODO: The sales list has emtys, need to filter them somehow.
+    # Saving lenght of all purchases
+    stop_looping = driver.find_elements_by_xpath('//table/tbody')
+    list_lenght = len(stop_looping) + 3
+    print(list_lenght)
 
     # Looping trough the sales list
     for idx, sale in enumerate(all_sales_cgtrader, start=1):
+
+        # The list has emtys, so need to stop looping after len() of sales list +3 , this stupid but idn what to do
+        if idx == len(stop_looping) + 3:
+            break
 
         # Need to store this data
         date = sale.find_element_by_xpath('td[2]').text
@@ -180,16 +187,16 @@ def get_data_cgtrader():
         sold_for = sale.find_element_by_xpath('td[7]').text
         earnings = sale.find_element_by_xpath('td[11]').text
 
-        if date == None:
-            pass
-
         # Changing the date output to (DAY/MONTH/YEAR)
         new_date = datetime.datetime.strptime(
             str(date[:10]), '%Y-%m-%d').strftime('%d/%m/%y')
 
+        # Creating the reverse index list
+        list_lenght -= 1
+
         # Saving sales data
         jsonOBJ.append({
-            "sale": idx,
+            "sale": list_lenght,
             "pruchase_id": purchase_id,
             "date": new_date,
             "product_name": product_name,
