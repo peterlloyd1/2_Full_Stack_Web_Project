@@ -53,59 +53,67 @@ def get_data_UI8():
         # WebDriverWait(driver, 3).until(EC.presence_of_element_located(
         #     (By.XPATH, '/html/body/div[1]/header/div[2]/div[2]/a')))
 
-        time.sleep(6)
+        time.sleep(7)
 
         print("Logged in on UI8")
 
     except:
         print("Login failed")
 
-    # getting the data from UI8
+    # Getting the data from UI8
     try:
+
         print("Scrapping data from UI8")
-        driver.get("https://ui8.net/affiliate/sales")
-        time.sleep(2)
-        all_sales_ui8 = driver.find_elements_by_xpath(
-            '//html/body/div[3]/div[2]/div[1]/table/tbody/tr[1]/td[2]')
 
-        print(driver.find_element_by_class_name("table table-striped"))
+        jsonOBJ = []
+        page_counter = 2
 
-        print(all_sales_ui8)
-        print(driver.find_element_by_xpath(
-            "/html/body/div[3]/div[2]/div[1]/table/thead/tr/th[1]"))
+        while page_counter >= 1:
 
-        print("Finished scrapping  data from UI8")
+            driver.get("https://ui8.net/affiliate/sales?page=" +
+                       str(page_counter))
+
+            # Saving all the items purchased
+            all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
+
+            for idx, sale in enumerate(all_sales, start=1):
+                date = sale.find_element_by_xpath('td[2]').text
+                product_name = sale.find_element_by_xpath('td[3]').text
+                amount = sale.find_element_by_xpath('td[5]').text
+                earnings = sale.find_element_by_xpath('td[6]').text
+
+                print(date)
+
+                # Changing the date output to (DAY/MONTH/YEAR)
+                new_date = datetime.datetime.strptime(
+                    str(date[:10]), '%m/%d/%Y').strftime('%d/%m/%y')
+
+                print(new_date + product_name + amount + earnings)
+
+                # Saving sales data
+                jsonOBJ.append({
+                    "sale": idx,
+                    "date": new_date,
+                    "product_name": product_name,
+                    "asking_price": amount,
+                    "revenue": earnings,
+                },
+                )
+
+            page_counter -= 1
+
+        # TODO: After while loop finishes, go to all sales and save the "Pass" sales data
+        print("Does code go here or not jet?")
+        # exporting sales data to json
+        with open('ui8_sales.json', 'w') as f:
+            json.dump(jsonOBJ, f, indent=4)
+
+        print(jsonOBJ)
+
+        print("Finished scrapping data from UI8 ")
 
     except:
         print("Could not Scrape data from UI8")
-
-
-# region Opening other sites
-# driver.execute_script("window.open('');")
-# driver.switch_to.window(driver.window_handles[1])
-
-# get_info_UI8()
-# driver.implicitly_wait(10)
-
-
-# driver.execute_script("window.open('');")
-# driver.switch_to.window(driver.window_handles[2])
-
-# driver.get("https://www.cgtrader.com/profile/sales#latest-sales")
-
-# driver.switch_to.window(driver.window_handles[1])
-
-# driver.get("https://ui8.net/affiliate/sales")
-
-# blendermarket = driver.window_handles[0]
-# ui8 = driver.window_handles[1]
-# cgtrader = driver.window_handles[2]
-
-# driver.switch_to.window(blendermarket)
-
-# endregion
-# TODO: Loop trough blendermarket data tables and store the information
-# TODO: Date, Product name, Amount before fees, Earnings after fees
 
 
 def get_data_blendermarket():
@@ -117,6 +125,9 @@ def get_data_blendermarket():
 
     # Saving all the items purchased
     all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
+    sales_lenght = driver.find_elements_by_xpath('//table/tbody')
+
+    print(sales_lenght)
 
     print(len(all_sales))
 
@@ -151,9 +162,9 @@ def get_data_blendermarket():
 
     print(jsonObj)
 
-    # exporting sales data to json
-    with open('blendermarket_sales.json', 'w') as f:
-        json.dump(jsonObj, f, indent=4)
+    # # exporting sales data to json
+    # with open('blendermarket_sales.json', 'w') as f:
+    #     json.dump(jsonObj, f, indent=4)
 
 
 def get_data_cgtrader():
@@ -213,4 +224,4 @@ def get_data_cgtrader():
         json.dump(jsonOBJ, f, indent=4)
 
 
-get_data_cgtrader()
+get_data_UI8()
