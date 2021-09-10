@@ -1,3 +1,4 @@
+from typing import Reversible
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -67,16 +68,26 @@ def get_data_UI8():
 
         jsonOBJ = []
         page_counter = 2
+        i = 1
 
         while page_counter >= 1:
 
             driver.get("https://ui8.net/affiliate/sales?page=" +
                        str(page_counter))
 
+            # # Grabbing sales lenght
+            # sales_lenght = driver.find_element_by_xpath(
+            #     "/html/body/div[3]/div[2]/div[2]/div/h5[2]").text[:2]
+            # print(sales_lenght)
+
+            # creating manual idx counter
+
             # Saving all the items purchased
             all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
 
-            for idx, sale in enumerate(all_sales, start=1):
+            print(all_sales)
+
+            for sale in reversed(all_sales):
                 date = sale.find_element_by_xpath('td[2]').text
                 product_name = sale.find_element_by_xpath('td[3]').text
                 amount = sale.find_element_by_xpath('td[5]').text
@@ -84,21 +95,28 @@ def get_data_UI8():
 
                 print(date)
 
+                print(i)
+
                 # Changing the date output to (DAY/MONTH/YEAR)
                 new_date = datetime.datetime.strptime(
                     str(date[:10]), '%m/%d/%Y').strftime('%d/%m/%y')
 
-                print(new_date + product_name + amount + earnings)
+                print(i+new_date+amount+earnings)
 
                 # Saving sales data
                 jsonOBJ.append({
-                    "sale": idx,
+                    "sale": i,
                     "date": new_date,
                     "product_name": product_name,
                     "asking_price": amount,
                     "revenue": earnings,
                 },
                 )
+
+                i += 1
+                # # Creating the reverse index list
+                # sales_lenght -= 1
+                # print(sales_lenght)
 
             page_counter -= 1
 
