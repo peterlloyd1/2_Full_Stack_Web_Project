@@ -85,9 +85,8 @@ def get_data_UI8():
             # Saving all the items purchased
             all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
 
-            print(all_sales)
-
             for sale in reversed(all_sales):
+
                 date = sale.find_element_by_xpath('td[2]').text
                 product_name = sale.find_element_by_xpath('td[3]').text
                 amount = sale.find_element_by_xpath('td[5]').text
@@ -101,7 +100,7 @@ def get_data_UI8():
                 new_date = datetime.datetime.strptime(
                     str(date[:10]), '%m/%d/%Y').strftime('%d/%m/%y')
 
-                print(i+new_date+amount+earnings)
+                print(new_date+amount+earnings)
 
                 # Saving sales data
                 jsonOBJ.append({
@@ -120,8 +119,31 @@ def get_data_UI8():
 
             page_counter -= 1
 
-        # TODO: After while loop finishes, go to all sales and save the "Pass" sales data
-        print("Does code go here or not jet?")
+        # * Storing the "Pass" sales data in a diffrent page.
+        time.sleep(2)
+        driver.get("https://ui8.net/affiliate/products")
+
+        # Saving all sales data, including "Pass"
+        all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
+
+        print(all_sales)
+        # probably need to create a new object and called "Pass sales"
+        for sale in all_sales:
+            product_name = sale.find_element_by_xpath('td[2]').text
+            pass_sales = sale.find_element_by_xpath('td[4]').text
+
+            # Saving sales data
+            jsonOBJ.append({
+                "sale": i,
+                "date": "ALL TIME",
+                "product_name": product_name[:-9],
+                "asking_price": None,
+                "revenue": pass_sales[4:-1],
+            },
+            )
+
+            i += 1
+
         # exporting sales data to json
         with open('ui8_sales.json', 'w') as f:
             json.dump(jsonOBJ, f, indent=4)
