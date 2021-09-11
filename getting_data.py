@@ -15,7 +15,7 @@ import pickle
 with open('login_details.json') as login_details:
     data = json.load(login_details)
 
-# getting todas date
+# getting todays date
 todays_date = date.today().strftime("%Y-%m-%d")
 
 
@@ -29,7 +29,6 @@ driver = webdriver.Chrome(
     executable_path="chromedriver.exe", options=options)
 
 
-# * Logging in on UI8
 def get_data_UI8():
     import time
 
@@ -72,17 +71,11 @@ def get_data_UI8():
 
         while page_counter >= 1:
 
+            # Looping trough all pages (Need to write page amount manually under page_counter)
             driver.get("https://ui8.net/affiliate/sales?page=" +
                        str(page_counter))
 
-            # # Grabbing sales lenght
-            # sales_lenght = driver.find_element_by_xpath(
-            #     "/html/body/div[3]/div[2]/div[2]/div/h5[2]").text[:2]
-            # print(sales_lenght)
-
-            # creating manual idx counter
-
-            # Saving all the items purchased
+            # Saving all individual items purchased
             all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
 
             for sale in reversed(all_sales):
@@ -92,15 +85,9 @@ def get_data_UI8():
                 amount = sale.find_element_by_xpath('td[5]').text
                 earnings = sale.find_element_by_xpath('td[6]').text
 
-                print(date)
-
-                print(i)
-
                 # Changing the date output to (DAY/MONTH/YEAR)
                 new_date = datetime.datetime.strptime(
                     str(date[:10]), '%m/%d/%Y').strftime('%d/%m/%y')
-
-                print(new_date+amount+earnings)
 
                 # Saving sales data
                 jsonOBJ.append({
@@ -113,21 +100,15 @@ def get_data_UI8():
                 )
 
                 i += 1
-                # # Creating the reverse index list
-                # sales_lenght -= 1
-                # print(sales_lenght)
 
             page_counter -= 1
 
-        # * Storing the "Pass" sales data in a diffrent page.
+        # * Storing the "Pass" sales data.
         time.sleep(2)
         driver.get("https://ui8.net/affiliate/products")
 
-        # Saving all sales data, including "Pass"
         all_sales = driver.find_elements_by_xpath('//table/tbody/tr')
 
-        print(all_sales)
-        # probably need to create a new object and called "Pass sales"
         for sale in all_sales:
             product_name = sale.find_element_by_xpath('td[2]').text
             pass_sales = sale.find_element_by_xpath('td[4]').text
@@ -147,8 +128,6 @@ def get_data_UI8():
         # exporting sales data to json
         with open('ui8_sales.json', 'w') as f:
             json.dump(jsonOBJ, f, indent=4)
-
-        print(jsonOBJ)
 
         print("Finished scrapping data from UI8 ")
 
@@ -262,6 +241,3 @@ def get_data_cgtrader():
     # exporting sales data to json
     with open('cgtrader_sales.json', 'w') as f:
         json.dump(jsonOBJ, f, indent=4)
-
-
-get_data_UI8()
