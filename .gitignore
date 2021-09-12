@@ -3,8 +3,15 @@ node_modules
 login_details
 login_details.json
 chromedriver.exe
-selenium/*
+selenium
 chrome-data
 blendermarket_sales.json
+node_modules
+public
 
 selenium/Local State
+sales-data/cgtrader_sales.json
+sales-data/getting_data.py
+sales-data/ui8_sales.json
+selenium/Default/Preferences
+selenium/First Run
