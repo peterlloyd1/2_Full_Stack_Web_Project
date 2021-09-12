@@ -10,7 +10,6 @@ node_modules
 
 selenium/Local State
 sales-data/cgtrader_sales.json
-sales-data/getting_data.py
 sales-data/ui8_sales.json
 selenium/Default/Preferences
 selenium/First Run
