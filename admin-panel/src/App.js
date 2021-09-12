@@ -1,9 +1,10 @@
 function App() {
+
   return (
     <div >
 
       <p>
-        nice
+        This is a admin panel
       </p>
 
     </div >
