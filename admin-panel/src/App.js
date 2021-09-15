@@ -1,11 +1,11 @@
+import "./app.css"
+import SalesSummery from "./components/SalesSummery"
+
 function App() {
 
   return (
-    <div >
-
-      <p>
-        This is a admin panel
-      </p>
+    <div className="App">
+      <SalesSummery />
 
     </div >
   );
