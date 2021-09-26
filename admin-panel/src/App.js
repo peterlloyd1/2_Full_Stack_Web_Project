@@ -1,7 +1,13 @@
 import "./app.css"
 import SalesSummery from "./components/SalesSummery"
-import { Button, InputLabel, MenuItem, FormHelperText, FormControl, Select } from "@material-ui/core"
+//import { Button } from "@material-ui/core"
 import React, { useState } from "react"
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 function App() {
 
@@ -27,8 +33,19 @@ function App() {
 
 
       <div>
-        <Button onClick={() => changeContent("Jun")}>Jun</Button>
-        <Button onClick={() => changeContent("Jul")}>Jul</Button>
+        {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            label="Basic example"
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider> */}
+
+        <button onClick={() => changeContent("Jun")}>Jun</button>
+        <button onClick={() => changeContent("Jul")}>Jul</button>
         <h1>{dates.startDate.toString()}</h1>
         <h1>{dates.endDate.toString()}</h1>
 
