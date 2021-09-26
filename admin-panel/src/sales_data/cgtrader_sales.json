@@ -1,0 +1,74 @@
+[
+    {
+        "sale": 8,
+        "pruchase_id": "4736414",
+        "date": "07/09/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "danielwatts",
+        "asking_price": "$48.00",
+        "revenue": "$33.27"
+    },
+    {
+        "sale": 7,
+        "pruchase_id": "4705360",
+        "date": "01/09/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "mario-leiva-ortiz",
+        "asking_price": "$48.00",
+        "revenue": "$33.27"
+    },
+    {
+        "sale": 6,
+        "pruchase_id": "4704691",
+        "date": "01/09/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "johnyho",
+        "asking_price": "$56.55",
+        "revenue": "$39.24"
+    },
+    {
+        "sale": 5,
+        "pruchase_id": "4703087",
+        "date": "01/09/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "emmanuelmarchais",
+        "asking_price": "$63.00",
+        "revenue": "$43.13"
+    },
+    {
+        "sale": 4,
+        "pruchase_id": "4690273",
+        "date": "30/08/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "guscreative",
+        "asking_price": "$47.60",
+        "revenue": "$32.53"
+    },
+    {
+        "sale": 3,
+        "pruchase_id": "4436509",
+        "date": "20/07/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "strana-vfx-1",
+        "asking_price": "$68.00",
+        "revenue": "$46.57"
+    },
+    {
+        "sale": 2,
+        "pruchase_id": "4385559",
+        "date": "12/07/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "beaversbrothers",
+        "asking_price": "$68.00",
+        "revenue": "$46.57"
+    },
+    {
+        "sale": 1,
+        "pruchase_id": "4248304",
+        "date": "21/06/21",
+        "product_name": "Cartoon Man and Woman Rigged",
+        "customer_email": "wincenzo",
+        "asking_price": "$68.00",
+        "revenue": "$46.57"
+    }
+]
