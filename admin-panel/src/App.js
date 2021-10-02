@@ -13,9 +13,9 @@ import Select from '@mui/material/Select';
 function App() {
 
 
-  const [filterData, setfilterData] = useState({ startDate: "", endDate: "", inputString: "", platform: "" })
+  const [filterData, setfilterData] = useState({ startDate: "", endDate: "", inputString: "", platform: "", product: "" })
 
-
+  // Something wrong with this loop I think, need to be divided into two.
   function changeDate(value) {
 
     if (value === "All") {
@@ -26,6 +26,10 @@ function App() {
       setfilterData({ ...filterData, platform: "CG" })
     } else if (value === "BM") {
       setfilterData({ ...filterData, platform: "BM" })
+    } else if (value === "product1") {
+      setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged" })
+    } else if (value === "product2") {
+      setfilterData({ ...filterData, product: "3D Character Mike back to school/university UI KIT" })
     } else if (value === "Jun") {
       setfilterData({ ...filterData, startDate: new Date("Mon Jun 1 2021"), endDate: new Date("Mon Jun 30 2021"), inputString: "Jun" })
     } else if (value === "Jul") {
@@ -39,25 +43,9 @@ function App() {
 
   console.log(filterData);
 
-  // function changePlatform(platform) {
-  //   if (platform === "All") {
-  //     setfilterData({ ...filterData, platform: "All" })
-  //   }
-  //   else if (platform === "UI8") {
-  //     setfilterData({ ...filterData, platform: "UI8" })
-  //   }
-  //   else if (platform === "CG") {
-  //     setfilterData({ ...filterData, platform: "CG" })
-
-  //   }
-  //   console.log(filterData);
-
-  // }
-
   return (
     <div className="App">
 
-      {/* Works awesome, now need to add anotehr sales data and filter it  */}
       <div>
 
         <h1>{filterData.startDate.toString()}</h1>
@@ -71,9 +59,9 @@ function App() {
               id="demo-simple-select"
               value={filterData.inputString}
               label="Date"
-            // onChange=
             >
-              <MenuItem onClick={() => changeDate("2021")} value={"2021"}>2021</MenuItem>
+              {/* // TODO:Need filter data from all year */}
+              {/* <MenuItem onClick={() => changeDate("2021")} value={"2021"}>2021</MenuItem> */}
               <MenuItem onClick={() => changeDate("Jun")} value={"Jun"}>Jun</MenuItem>
               <MenuItem onClick={() => changeDate("Jul")} value={"Jul"}>July</MenuItem>
               <MenuItem onClick={() => changeDate("Aug")} value={"Aug"}>Aug</MenuItem>
@@ -91,7 +79,6 @@ function App() {
               id="demo-simple-select"
               value={filterData.platform}
               label="Platform"
-            // onChange=
             >
               <MenuItem onClick={() => changeDate("All")} value={"All"}>All</MenuItem>
               <MenuItem onClick={() => changeDate("UI8")} value={"UI8"}>UI8</MenuItem>
@@ -102,9 +89,25 @@ function App() {
           </FormControl>
         </Box>
 
+        <Box sx={{ minWidth: 120, maxWidth: 200 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Product</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={filterData.product}
+              label="Platform"
+            >
+              <MenuItem onClick={() => changeDate("product1")} value={"Cartoon Man And Woman Rigged"}>Cartoon Man And Woman Rigged</MenuItem>
+              <MenuItem onClick={() => changeDate("product2")} value={"3D Character Mike back to school/university UI KIT"}>3D Character Mike back to school/university UI KIT</MenuItem>
+            </Select>
+            <FormHelperText>Select Product</FormHelperText>
+          </FormControl>
+        </Box>
+
       </div>
 
-      <SalesSummery platform={filterData.platform} startDate={filterData.startDate} endDate={filterData.endDate} />
+      <SalesSummery product={filterData.product} platform={filterData.platform} startDate={filterData.startDate} endDate={filterData.endDate} />
 
 
     </div >
