@@ -28,7 +28,7 @@ export default function SalesSummery(props) {
 
         })
 
-        // Filter by product name
+        // Filter by product name 
         if (props.product === "3D Character Mike back to school/university UI KIT") {
 
             result = result.filter(function (obj) {
@@ -39,13 +39,14 @@ export default function SalesSummery(props) {
 
         } else if (props.product === "Cartoon Man And Woman Rigged") {
 
-            //! BUT U RETURN HERE??????????    
             result = result.filter(function (obj) {
                 console.log(obj.product_name);
                 return obj.product_name.match("Cartoon Man and Woman Rigged")
 
 
             })
+        } else if (props.product === "All") {
+            return result
         } else {
             console.log("No products selected or no matching product.");
         }
@@ -58,6 +59,27 @@ export default function SalesSummery(props) {
             return date >= props.startDate && date <= props.endDate
 
         })
+        console.log(props.product);
+        // Filter by product name
+        if (props.product === "3D Character Mike back to school/university UI KIT") {
+
+            result = result.filter(function (obj) {
+                console.log(obj);
+                return obj.product_name.match("3D Character Mike back to school/university UI KIT")
+
+            })
+
+        } else if (props.product === "Cartoon Man And Woman Rigged") {
+
+            result = result.filter(function (obj) {
+                console.log(obj.product_name);
+                return obj.product_name.match("Cartoon Man And Woman Rigged")
+
+
+            })
+        } else {
+
+        }
 
     } else if (props.platform === "BM") {
 
@@ -69,6 +91,25 @@ export default function SalesSummery(props) {
 
 
         })
+
+        // Filter by product name
+        if (props.product === "3D Character Mike back to school/university UI KIT") {
+
+            result = result.filter(function (obj) {
+                return obj.product_name.match("3D Character Mike back to school/university UI KIT")
+
+            })
+
+        } else if (props.product === "Cartoon Man And Woman Rigged") {
+
+            result = result.filter(function (obj) {
+                return obj.product_name.match("Cartoon Man And Woman Rigged")
+
+
+            })
+        } else {
+            console.log("No products selected or no matching product.");
+        }
 
     }
 

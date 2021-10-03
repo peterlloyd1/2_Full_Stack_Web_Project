@@ -80,6 +80,8 @@ function App() {
               value={filterData.platform}
               label="Platform"
             >
+
+              {/* Filter all platforms data */}
               <MenuItem onClick={() => changeDate("All")} value={"All"}>All</MenuItem>
               <MenuItem onClick={() => changeDate("UI8")} value={"UI8"}>UI8</MenuItem>
               <MenuItem onClick={() => changeDate("CG")} value={"CG"}>CGTrader</MenuItem>
@@ -98,6 +100,8 @@ function App() {
               value={filterData.product}
               label="Platform"
             >
+              {/* Add an "All" button to display results for all products*/}
+              <MenuItem onClick={() => changeDate("productAll")} value={"ProductAll"}>All</MenuItem>
               <MenuItem onClick={() => changeDate("product1")} value={"Cartoon Man And Woman Rigged"}>Cartoon Man And Woman Rigged</MenuItem>
               <MenuItem onClick={() => changeDate("product2")} value={"3D Character Mike back to school/university UI KIT"}>3D Character Mike back to school/university UI KIT</MenuItem>
             </Select>
