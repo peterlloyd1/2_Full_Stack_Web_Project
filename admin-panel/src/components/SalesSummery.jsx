@@ -45,7 +45,7 @@ export default function SalesSummery(props) {
 
 
             })
-        } else if (props.product === "All") {
+        } else if (props.product === "ProductAll") {
             return result
         } else {
             console.log("No products selected or no matching product.");
@@ -59,12 +59,10 @@ export default function SalesSummery(props) {
             return date >= props.startDate && date <= props.endDate
 
         })
-        console.log(props.product);
         // Filter by product name
         if (props.product === "3D Character Mike back to school/university UI KIT") {
 
             result = result.filter(function (obj) {
-                console.log(obj);
                 return obj.product_name.match("3D Character Mike back to school/university UI KIT")
 
             })
@@ -72,13 +70,12 @@ export default function SalesSummery(props) {
         } else if (props.product === "Cartoon Man And Woman Rigged") {
 
             result = result.filter(function (obj) {
-                console.log(obj.product_name);
                 return obj.product_name.match("Cartoon Man And Woman Rigged")
 
 
             })
-        } else {
-
+        } else if (props.product === "ProductAll") {
+            return result
         }
 
     } else if (props.platform === "BM") {
@@ -107,8 +104,8 @@ export default function SalesSummery(props) {
 
 
             })
-        } else {
-            console.log("No products selected or no matching product.");
+        } else if (props.product === "ProductAll") {
+            return result
         }
 
     }

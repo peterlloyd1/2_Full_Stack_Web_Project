@@ -26,6 +26,8 @@ function App() {
       setfilterData({ ...filterData, platform: "CG" })
     } else if (value === "BM") {
       setfilterData({ ...filterData, platform: "BM" })
+    } else if (value === "productAll") {
+      setfilterData({ ...filterData, product: "productAll" })
     } else if (value === "product1") {
       setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged" })
     } else if (value === "product2") {
@@ -101,7 +103,7 @@ function App() {
               label="Platform"
             >
               {/* Add an "All" button to display results for all products*/}
-              <MenuItem onClick={() => changeDate("productAll")} value={"ProductAll"}>All</MenuItem>
+              <MenuItem onClick={() => changeDate("productAll")} value={"productAll"}>All</MenuItem>
               <MenuItem onClick={() => changeDate("product1")} value={"Cartoon Man And Woman Rigged"}>Cartoon Man And Woman Rigged</MenuItem>
               <MenuItem onClick={() => changeDate("product2")} value={"3D Character Mike back to school/university UI KIT"}>3D Character Mike back to school/university UI KIT</MenuItem>
             </Select>
