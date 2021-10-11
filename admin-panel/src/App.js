@@ -19,7 +19,7 @@ function App() {
   function changeDate(value) {
 
     if (value === "All") {
-      setfilterData({ ...filterData, platform: "All" })
+      setfilterData({ ...filterData, platform: "platformsAll" })
     } else if (value === "UI8") {
       setfilterData({ ...filterData, platform: "UI8" })
     } else if (value === "CG") {

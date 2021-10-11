@@ -1,8 +1,9 @@
 import React from 'react'
 import UI8 from "../sales_data/ui8_sales.json"
-import CGTrader from "../sales_data/blendermarket_sales.json"
+import CGTrader from "../sales_data/cgtrader_sales.json"
 import BlenderMarket from "../sales_data/blendermarket_sales.json"
 import UI8Test from "../sales_data/ui8_sales_rename_test.json"
+var _ = require('lodash');
 
 
 
@@ -12,8 +13,23 @@ export default function SalesSummery(props) {
     // eslint-disable-next-line
     let ui8_revenue_product_01, ui8_revenue_product_02 = 0
 
-    // Filter by platform
-    if (props.platform === "UI8") {
+    // TODO: Add a if that check if platform is all and then by produc, need to combine all of sales data into one
+    // Filter by platform, add "Platform": to json data?
+
+
+    if (props.platform === "platformsAll") {
+        // Need combine all products in one json and then check which product was selected. Maybe just filter it all from here and just check with platform is selected?
+
+        let combine = _.unionBy(UI8Test, CGTrader, 'id');
+
+        result = _.unionBy(combine, BlenderMarket, "id")
+        console.log(result);
+
+
+
+    }
+
+    else if (props.platform === "UI8") {
 
         result = UI8Test.filter(function (obj) {
             // My date thingy is trash need to reforumalte to filter.
@@ -104,8 +120,6 @@ export default function SalesSummery(props) {
 
 
             })
-        } else if (props.product === "ProductAll") {
-            return result
         }
 
     }
