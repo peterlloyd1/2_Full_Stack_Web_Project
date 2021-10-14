@@ -32,6 +32,8 @@ function App() {
       setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged" })
     } else if (value === "product2") {
       setfilterData({ ...filterData, product: "3D Character Mike back to school/university UI KIT" })
+    } else if (value === "allTime") {
+      setfilterData({ ...filterData, startDate: new Date("Fri Jan 1 2021"), endDate: new Date("Fri Dec 31 2021"), inputString: "All Time" })
     } else if (value === "Jun") {
       setfilterData({ ...filterData, startDate: new Date("Mon Jun 1 2021"), endDate: new Date("Mon Jun 30 2021"), inputString: "Jun" })
     } else if (value === "Jul") {
@@ -43,7 +45,6 @@ function App() {
     }
   }
 
-  console.log(filterData);
 
   return (
     <div className="App">
@@ -63,7 +64,7 @@ function App() {
               label="Date"
             >
               {/* // TODO:Need filter data from all year */}
-              {/* <MenuItem onClick={() => changeDate("2021")} value={"2021"}>2021</MenuItem> */}
+              <MenuItem onClick={() => changeDate("allTime")} value={"All Time"}>All Time</MenuItem>
               <MenuItem onClick={() => changeDate("Jun")} value={"Jun"}>Jun</MenuItem>
               <MenuItem onClick={() => changeDate("Jul")} value={"Jul"}>July</MenuItem>
               <MenuItem onClick={() => changeDate("Aug")} value={"Aug"}>Aug</MenuItem>
@@ -113,7 +114,7 @@ function App() {
 
       </div>
 
-      <SalesSummery product={filterData.product} platform={filterData.platform} startDate={filterData.startDate} endDate={filterData.endDate} />
+      <SalesSummery product={filterData.product} platform={filterData.platform} startDate={filterData.startDate} endDate={filterData.endDate} date={filterData.inputString} />
 
 
     </div >
