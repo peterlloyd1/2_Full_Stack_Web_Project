@@ -12,26 +12,57 @@ export default function SalesSummery(props) {
     let combine = _.unionBy(UI8Test, CGTrader, 'id');
     var result = _.unionBy(combine, BlenderMarket, "id")
 
-    // eslint-disable-next-line
-    let ui8_revenue_product_01, ui8_revenue_product_02 = 0
 
     // TODO: Things we want to filter.
-
     //* First we filter the time.
     //* -> Then Platform
     //* -> Then Product
 
     console.log(props);
+
+    // Filter by all time
     if (props.date === "All Time") {
-
         console.log(result);
-        return result
+        console.log("FIltering ALL sales " + result.length);
+
+        // Filter by All platform
+        if (props.platform === "platformsAll") {
+            console.log("Filtering all Platforms");
+
+            // Filter by product
+            if (props.product === "productAll") {
+                console.log("Filtering all product");
+            }
+        }
+        // // Filter by Plaform UI8
+        if (props.platform === "UI8") {
+            result = result.filter(function (obj) {
+                console.log(obj.platform);
+                return obj.platform.match("UI8")
 
 
-    } // Maybe a forloop that somehow loops trough all the months? cuz writing all 12 months is kinda dumb
-    else if (props.date === "Jun") {
+            })
+            console.log(result);
+        }
 
     }
+    // Writing each month manually like an ape.
+    // Filter by time
+    else if (props.date === "Jun") {
+
+        result = CGTrader.filter(function (obj) {
+            var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
+            return date >= props.startDate && date <= props.endDate
+
+        })
+        console.log(result);
+        // Filter by platform
+        // if (props.product_name)
+
+
+    }
+
+    // Filter by product
 
 
 
