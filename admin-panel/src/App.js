@@ -13,7 +13,7 @@ import Select from '@mui/material/Select';
 function App() {
 
 
-  const [filterData, setfilterData] = useState({ startDate: "", endDate: "", inputString: "", platform: "", product: "" })
+  const [filterData, setfilterData] = useState({ startDate: "", endDate: "", inputString: "", platform: "", product: "", productString: "" })
 
   // Something wrong with this loop I think, need to be divided into two.
   function changeDate(value) {
@@ -27,11 +27,11 @@ function App() {
     } else if (value === "BM") {
       setfilterData({ ...filterData, platform: "BM" })
     } else if (value === "productAll") {
-      setfilterData({ ...filterData, product: "productAll" })
+      setfilterData({ ...filterData, product: "productAll", productString: "productAll" })
     } else if (value === "product1") {
-      setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged" })
+      setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged", productString: "Cartoon Man And Woman Rigged" })
     } else if (value === "product2") {
-      setfilterData({ ...filterData, product: "3D Character Mike back to school/university UI KIT" })
+      setfilterData({ ...filterData, product: "3D Character Mike back to school/university UI KIT", productString: "3D Character Mike back to school/university UI KIT" })
     } else if (value === "allTime") {
       setfilterData({ ...filterData, startDate: new Date("Fri Jan 1 2021"), endDate: new Date("Fri Dec 31 2021"), inputString: "All Time" })
     } else if (value === "Jun") {
@@ -43,6 +43,8 @@ function App() {
     } else if (value === "Sep") {
       setfilterData({ ...filterData, startDate: new Date("Mon Sep 1 2021"), endDate: new Date("Mon Sep 30 2021"), inputString: "Sep" })
     }
+
+    console.log(filterData);
   }
 
 
@@ -100,7 +102,7 @@ function App() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={filterData.product}
+              value={filterData.productString}
               label="Platform"
             >
               {/* Add an "All" button to display results for all products*/}

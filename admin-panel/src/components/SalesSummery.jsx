@@ -21,9 +21,9 @@ export default function SalesSummery(props) {
     console.log(props);
 
     // Filter by all time
+    // I could make this as a seperate function and just call it with props.date & other?
     if (props.date === "All Time") {
         console.log(result);
-        console.log("FIltering ALL sales " + result.length);
 
         // Filter by All platform
         if (props.platform === "platformsAll") {
@@ -34,15 +34,31 @@ export default function SalesSummery(props) {
                 console.log("Filtering all product");
             }
         }
-        // // Filter by Plaform UI8
+        // Filter by Plaform UI8
         if (props.platform === "UI8") {
             result = result.filter(function (obj) {
-                console.log(obj.platform);
                 return obj.platform.match("UI8")
 
 
             })
-            console.log(result);
+            // Filter by product 1 & product 2 & all products
+            if (props.product === "productAll") {
+                console.log("Filtering all product");
+            }
+            else if (props.product === 'Cartoon Man And Woman Rigged') {
+                result = result.filter(function (obj) {
+                    return obj.product_name.match("Cartoon Man and Woman Rigged")
+
+                })
+
+            }
+            else if (props.product === "3D Character Mike back to school/university UI KIT") {
+                result = result.filter(function (obj) {
+                    return obj.product_name.match("3D Character Mike back to school/university UI KIT")
+
+                })
+
+            }
         }
 
     }
