@@ -11,34 +11,15 @@ export default function SalesSummery(props) {
 
     let combine = _.unionBy(UI8Test, CGTrader, 'id');
     var result = _.unionBy(combine, BlenderMarket, "id")
+    var month_array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
-    // TODO: Things we want to filter.
-    //* First we filter the time.
-    //* -> Then Platform
-    //* -> Then Product
+    function filterPlatform(platform) {
 
-    console.log(props);
-
-    // Filter by all time
-    // I could make this as a seperate function and just call it with props.date & other?
-    if (props.date === "All Time") {
-        console.log(result);
-
-        // Filter by All platform
-        if (props.platform === "platformsAll") {
-            console.log("Filtering all Platforms");
-
-            // Filter by product
-            if (props.product === "productAll") {
-                console.log("Filtering all product");
-            }
-        }
-        // Filter by Plaform UI8
-        if (props.platform === "UI8") {
+        console.log(platform + " = " + props.platform);
+        if (props.platform === platform) {
             result = result.filter(function (obj) {
-                return obj.platform.match("UI8")
-
+                return obj.platform.match(platform)
 
             })
             // Filter by product 1 & product 2 & all products
@@ -60,6 +41,43 @@ export default function SalesSummery(props) {
 
             }
         }
+
+
+    }
+    // TODO: Things we want to filter.
+    //* First we filter the time.
+    //* -> Then Platform
+    //* -> Then Product
+
+    console.log(props);
+
+    // Filter by all time
+    // I could make this as a seperate function and just call it with props.date & other?
+    if (props.date === "All Time") {
+        console.log(result);
+
+        // Filter by All platform
+        if (props.platform === "platformsAll") {
+            console.log("Filtering all Platforms");
+
+            // Filter by product
+            if (props.product === "productAll") {
+                console.log("Filtering all product");
+            }
+
+        }
+        else if (props.platform === "UI8") {
+            filterPlatform("UI8")
+        }
+        else if (props.platform === "CGTrader") {
+            filterPlatform("CGTrader")
+            console.log(result)
+        }
+        else if (props.platform === "BlenderMarket") {
+            filterPlatform("BlenderMarket")
+            console.log(result);
+        }
+
 
     }
     // Writing each month manually like an ape.

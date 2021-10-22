@@ -22,10 +22,10 @@ function App() {
       setfilterData({ ...filterData, platform: "platformsAll" })
     } else if (value === "UI8") {
       setfilterData({ ...filterData, platform: "UI8" })
-    } else if (value === "CG") {
-      setfilterData({ ...filterData, platform: "CG" })
-    } else if (value === "BM") {
-      setfilterData({ ...filterData, platform: "BM" })
+    } else if (value === "CGTrader") {
+      setfilterData({ ...filterData, platform: "CGTrader" })
+    } else if (value === "BlenderMarket") {
+      setfilterData({ ...filterData, platform: "BlenderMarket" })
     } else if (value === "productAll") {
       setfilterData({ ...filterData, product: "productAll", productString: "productAll" })
     } else if (value === "product1") {
@@ -89,8 +89,8 @@ function App() {
               {/* Filter all platforms data */}
               <MenuItem onClick={() => changeDate("All")} value={"All"}>All</MenuItem>
               <MenuItem onClick={() => changeDate("UI8")} value={"UI8"}>UI8</MenuItem>
-              <MenuItem onClick={() => changeDate("CG")} value={"CG"}>CGTrader</MenuItem>
-              <MenuItem onClick={() => changeDate("BM")} value={"BM"}>BlenderMarket</MenuItem>
+              <MenuItem onClick={() => changeDate("CGTrader")} value={"CGTrader"}>CGTrader</MenuItem>
+              <MenuItem onClick={() => changeDate("BlenderMarket")} value={"BlenderMarket"}>BlenderMarket</MenuItem>
             </Select>
             <FormHelperText>Select Platform</FormHelperText>
           </FormControl>
