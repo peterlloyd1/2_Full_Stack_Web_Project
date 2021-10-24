@@ -29,7 +29,7 @@ function App() {
     } else if (value === "productAll") {
       setfilterData({ ...filterData, product: "productAll", productString: "productAll" })
     } else if (value === "product1") {
-      setfilterData({ ...filterData, product: "Cartoon Man And Woman Rigged", productString: "Cartoon Man And Woman Rigged" })
+      setfilterData({ ...filterData, product: "Cartoon Man and Woman Rigged", productString: "Cartoon Man and Woman Rigged" })
     } else if (value === "product2") {
       setfilterData({ ...filterData, product: "3D Character Mike back to school/university UI KIT", productString: "3D Character Mike back to school/university UI KIT" })
     } else if (value === "allTime") {
@@ -107,7 +107,7 @@ function App() {
             >
               {/* Add an "All" button to display results for all products*/}
               <MenuItem onClick={() => changeDate("productAll")} value={"productAll"}>All</MenuItem>
-              <MenuItem onClick={() => changeDate("product1")} value={"Cartoon Man And Woman Rigged"}>Cartoon Man And Woman Rigged</MenuItem>
+              <MenuItem onClick={() => changeDate("product1")} value={"Cartoon Man and Woman Rigged"}>Cartoon Man and Woman Rigged</MenuItem>
               <MenuItem onClick={() => changeDate("product2")} value={"3D Character Mike back to school/university UI KIT"}>3D Character Mike back to school/university UI KIT</MenuItem>
             </Select>
             <FormHelperText>Select Product</FormHelperText>

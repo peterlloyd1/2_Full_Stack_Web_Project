@@ -22,27 +22,27 @@ export default function SalesSummery(props) {
                 return obj.platform.match(platform)
 
             })
-            // Filter by product 1 & product 2 & all products
-            if (props.product === "productAll") {
-                console.log("Filtering all product");
-            }
-            else if (props.product === 'Cartoon Man And Woman Rigged') {
-                result = result.filter(function (obj) {
-                    return obj.product_name.match("Cartoon Man and Woman Rigged")
-
-                })
-
-            }
-            else if (props.product === "3D Character Mike back to school/university UI KIT") {
-                result = result.filter(function (obj) {
-                    return obj.product_name.match("3D Character Mike back to school/university UI KIT")
-
-                })
-
-            }
         }
 
+    }
 
+    function filterProduct(product) {
+        // Filter by product 1 & product 2 & all products
+
+        console.log(product + " = " + props.product);
+
+        if (props.product === "productAll") {
+            console.log("Filtering all product");
+        }
+        else if (props.product === product) {
+            result = result.filter(function (obj) {
+                console.log(obj.product_name);
+                return obj.product_name.match(product)
+
+
+            })
+
+        }
     }
     // TODO: Things we want to filter.
     //* First we filter the time.
@@ -68,14 +68,19 @@ export default function SalesSummery(props) {
         }
         else if (props.platform === "UI8") {
             filterPlatform("UI8")
+            //Filter by product
+            filterProduct(props.product)
+
         }
         else if (props.platform === "CGTrader") {
             filterPlatform("CGTrader")
             console.log(result)
+            filterProduct(props.product)
         }
         else if (props.platform === "BlenderMarket") {
             filterPlatform("BlenderMarket")
             console.log(result);
+            filterProduct(props.product)
         }
 
 
