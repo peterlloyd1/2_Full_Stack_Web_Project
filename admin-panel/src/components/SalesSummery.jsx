@@ -11,7 +11,6 @@ export default function SalesSummery(props) {
 
     let combine = _.unionBy(UI8Test, CGTrader, 'id');
     var result = _.unionBy(combine, BlenderMarket, "id")
-    var month_array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
     function filterPlatform(platform) {
@@ -44,10 +43,6 @@ export default function SalesSummery(props) {
 
         }
     }
-    // TODO: Things we want to filter.
-    //* First we filter the time.
-    //* -> Then Platform
-    //* -> Then Product
 
     console.log(props);
 
@@ -66,40 +61,63 @@ export default function SalesSummery(props) {
             }
 
         }
-        else if (props.platform === "UI8") {
-            filterPlatform("UI8")
-            //Filter by product
+        else {
+            filterPlatform(props.platform)
             filterProduct(props.product)
 
         }
-        else if (props.platform === "CGTrader") {
-            filterPlatform("CGTrader")
-            console.log(result)
-            filterProduct(props.product)
-        }
-        else if (props.platform === "BlenderMarket") {
-            filterPlatform("BlenderMarket")
-            console.log(result);
-            filterProduct(props.product)
+
+    }
+    else {
+        // We create a for loop that filters each month and calls same thing we call in "AllTime"
+        // month_array.forEach((month) => {
+
+        //     let startDate = new Date("2021" + month)
+        //     // How we make it know its end date?
+        //     let endDate = new Date("2021", month - 1, 0)
+
+        //     console.log(month);
+        //     console.log(startDate + " til " + endDate);
+        // })
+
+
+        // var month = 0; // January
+        // var startDate = new Date(2021, month);
+        // var endDate = new Date(2021, month + 1, 0);
+        // console.log(startDate + " til " + endDate); // last day in January
+
+        for (let i = 0; i < 12; i++) {
+            // 0 = January
+            var startDate = new Date(2021, i);
+            var endDate = new Date(2021, i + 1, 0);
+
+            if (props.startDate.toString() === startDate.toString()) {
+                result = result.filter(function (obj) {
+                    var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
+                    return date >= startDate && date <= endDate
+
+                })
+            }
+
         }
 
 
     }
     // Writing each month manually like an ape.
     // Filter by time
-    else if (props.date === "Jun") {
+    // else if (props.date === "Jun") {
 
-        result = CGTrader.filter(function (obj) {
-            var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
-            return date >= props.startDate && date <= props.endDate
+    //     result = CGTrader.filter(function (obj) {
+    //         var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
+    //         return date >= props.startDate && date <= props.endDate
 
-        })
-        console.log(result);
-        // Filter by platform
-        // if (props.product_name)
+    //     })
+    //     console.log(result);
+    //     // Filter by platform
+    //     // if (props.product_name)
 
 
-    }
+    // }
 
     // Filter by product
 
