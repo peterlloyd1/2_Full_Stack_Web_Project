@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="App">
 
-      <div>
+      <div className="buttons">
 
         <h1>{filterData.startDate.toString()}</h1>
         <h1>{filterData.endDate.toString()}</h1>

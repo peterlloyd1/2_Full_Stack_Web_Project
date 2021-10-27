@@ -69,22 +69,6 @@ export default function SalesSummery(props) {
 
     }
     else {
-        // We create a for loop that filters each month and calls same thing we call in "AllTime"
-        // month_array.forEach((month) => {
-
-        //     let startDate = new Date("2021" + month)
-        //     // How we make it know its end date?
-        //     let endDate = new Date("2021", month - 1, 0)
-
-        //     console.log(month);
-        //     console.log(startDate + " til " + endDate);
-        // })
-
-
-        // var month = 0; // January
-        // var startDate = new Date(2021, month);
-        // var endDate = new Date(2021, month + 1, 0);
-        // console.log(startDate + " til " + endDate); // last day in January
 
         for (let i = 0; i < 12; i++) {
             // 0 = January
@@ -92,46 +76,39 @@ export default function SalesSummery(props) {
             var endDate = new Date(2021, i + 1, 0);
 
             if (props.startDate.toString() === startDate.toString()) {
+
                 result = result.filter(function (obj) {
                     var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
                     return date >= startDate && date <= endDate
 
                 })
+                filterPlatform(props.platform)
+                filterProduct(props.product)
+
+
             }
 
         }
 
 
     }
-    // Writing each month manually like an ape.
-    // Filter by time
-    // else if (props.date === "Jun") {
 
-    //     result = CGTrader.filter(function (obj) {
-    //         var date = new Date("20" + parseInt(obj.date.slice(-2)), parseInt(obj.date.slice(3, 5)) - 1, parseInt(obj.date.slice(0, 2)))
-    //         return date >= props.startDate && date <= props.endDate
+    var summery = 0
 
-    //     })
-    //     console.log(result);
-    //     // Filter by platform
-    //     // if (props.product_name)
-
-
-    // }
-
-    // Filter by product
-
-
-
+    // Next goal, actually useable using this date display in a graph
     return (
         <div>
 
             {result.map((sale, i) => {
+                // <p key={i}> {sale.sale}  {sale.date} {sale.product_name} {sale.revenue} </p>
+                console.log(sale.revenue.slice(1, -3));
+                summery += parseInt(sale.revenue.slice(1, -3))
 
-                return <p key={i}> {sale.sale}  {sale.date} {sale.product_name} {sale.revenue} </p>
 
 
+                console.log(summery);
             })}
+            <h2>{props.product} geneated {summery} starting in {props.startDate.toString().slice(3, 7)} </h2>
 
         </div >
     )
